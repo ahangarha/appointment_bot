@@ -10,14 +10,14 @@ from selenium.webdriver.chrome.service import Service
 
 from Gmail import gmail_ckeck
 from Before_Calendar import before_calendar
+from config import *
 
-
-bot = telebot.TeleBot("...")  # Insert your bot's TOKEN here
+bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
 service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 
-otp_automate = True  # It is defined to specify the OTP extraction's method
+otp_automate = OTP_AUTOMATE
 
 all_users = {}
 
@@ -37,7 +37,7 @@ class User:
 # Whenever user inputs /start, this function is called.
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-
+    print("start!..")
     welcome = "Hello *{}*.\n\n".format(message.from_user.first_name) + "I'm Here to Help You in Booking a Biometric Appointment!\n\n" + \
         "Please Press *Booking Appointment* to Start the Process.\n"
     markup = types.InlineKeyboardMarkup(row_width=1)
