@@ -14,8 +14,10 @@ from config import *
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 
+chromeOptions = webdriver.ChromeOptions()
+chromeOptions.add_argument("--remote-debugging-port=9222")
 service = Service(executable_path=ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, chrome_options=chromeOptions)
 
 otp_automate = OTP_AUTOMATE
 
@@ -37,7 +39,7 @@ class User:
 # Whenever user inputs /start, this function is called.
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    print("start!..")
+
     welcome = "Hello *{}*.\n\n".format(message.from_user.first_name) + "I'm Here to Help You in Booking a Biometric Appointment!\n\n" + \
         "Please Press *Booking Appointment* to Start the Process.\n"
     markup = types.InlineKeyboardMarkup(row_width=1)
@@ -197,7 +199,7 @@ def get_captcha(message):
 
     global driver
 
-    driver.get("https://www.vfsglobal.ca/IRCC-AppointmentWave1/Account/RegisteredLogin?q=shSA0YnE4pLF9Xzwon/x/CQ1P0LBKn66dLdNUfueK+wgQK15FNs3yVpXjESPsPIkYqDL56on8vfAnBfe7K1ejg==")
+    driver.get(APPLICATION_URL)
     img = driver.find_element_by_id("CaptchaImage").screenshot_as_png
     msg = bot.send_photo(message.chat.id, img,
                          caption="Please insert captcha number")
