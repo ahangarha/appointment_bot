@@ -1,3 +1,5 @@
+APPLICATION_URL = ""
+
 TELEGRAM_TOKEN = ""
 
 # Specify the OTP extraction's method
